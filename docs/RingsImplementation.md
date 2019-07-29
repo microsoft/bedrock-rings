@@ -5,7 +5,7 @@ This guide intends to implement Rings on Kubernetes without a Service Mesh using
 ## Prerequisites
 
 1. An Azure Container Registry (ACR)
-2. A [Service Connection](../azure-devops/ImageTagRelease.md#Create-a-service-connection-to-ACR) established in Azure DevOps to access the ACR
+2. A [Service Connection](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) established in Azure DevOps to access the ACR
 
 ## Implement the Rings Workflow
 
@@ -179,7 +179,7 @@ steps:
 In addition to the environment variables defined in teh `azure-pipelines.yaml`, this pipeline requires you have the following pipeline variables set:
 
 - `ACCESS_TOKEN`: Set this to a personal access token that has write access to your repository
-- `REPO`: Set this to the **Materialized Manifest** repository (e.g https://github.com/bnookala/hello-rings-materialized)
+- `REPO`: Set this to the **Materialized Manifest** repository (e.g [hello-rings-materialized](https://github.com/bnookala/hello-rings-materialized))
 
 As described in the [Rings Model](https://github.com/microsoft/bedrock-rings/blob/master/README.md) documentation, the idea of using a "Cluster HLD" is to have a repository that maintains the High Level Definition for **all** services and revisions that are intended to be run on the cluster.
 
