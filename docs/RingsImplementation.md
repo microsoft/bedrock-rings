@@ -1,6 +1,6 @@
 # Rings Implementation
 
-This guide intends to implement Rings on Kubernetes without a Service Mesh using Azure DevOps. We recommend you review the [Rings](./README.md) documentation to understand the design of this ringed model before attempting to implement it.
+This guide intends to implement Rings on Kubernetes without a Service Mesh using Azure DevOps. We recommend you review the [Rings](https://github.com/microsoft/bedrock-rings/blob/master/README.md) documentation to understand the design of this ringed model before attempting to implement it.
 
 ## Prerequisites
 
@@ -60,15 +60,15 @@ This release pipeline is meant to be the second piece to the Image Tag Release. 
 
 1. First, create a new release pipeline using an 'Empty Job' template as the stage (e.g. Dev).
 
-    ![](./images/new_release_pipeline.png)
+    ![](./../images/new_release_pipeline.png)
 
-    ![](./images/new_stage.png)
+    ![](./../images/new_stage.png)
 
 2. Add a new artifact by selecting Azure Container Registry that we're pushing to, in the previous step. If you haven not already setup the connections necessary to add this in your project settings, follow instructions [here](../azure-devops/ImageTagRelease.md#Create-a-service-connection-to-ACR).
 
-    ![](./images/artifact_acr.png)
+    ![](./../images/artifact_acr.png)
 
-3. Add two build steps to this pipeline. The first downloads the necessary prerequisites, and the second runs the [release script](./rings-release.sh).
+3. Add two build steps to this pipeline. The first downloads the necessary prerequisites, and the second runs the [release script](https://github.com/microsoft/bedrock-rings/blob/master/rings-release.sh).
 
     - **GitHub**
 
@@ -87,11 +87,11 @@ This release pipeline is meant to be the second piece to the Image Tag Release. 
         sudo apt-get install hub
         ```
 
-        ![](./images/download_prereqs.png)
+        ![](./../images/download_prereqs.png)
 
-        2. Copy the contents of [`rings-release.sh`](./rings-release.sh) and run it inline, or you can source and run the release script in the second task.
+        2. Copy the contents of [`rings-release.sh`](https://github.com/microsoft/bedrock-rings/blob/master/rings-release.sh) and run it inline, or you can source and run the release script in the second task.
 
-         ![](./images/run_release.png)
+         ![](./../images/run_release.png)
 
     - **Azure DevOps**
 
@@ -110,7 +110,7 @@ This release pipeline is meant to be the second piece to the Image Tag Release. 
         az extension add --name azure-devops
         ```
 
-        2. Copy the contents of [`rings-release.sh`](https://github.com/microsoft/bedrock/blob/rings/gitops/rings/rings-release.sh).
+        2. Copy the contents of [`rings-release.sh`](https://github.com/microsoft/bedrock-rings/blob/master/rings-release.sh).
 
             **NOTE:** Be sure to **comment** lines 83-85 and **uncomment** lines 89-92 to use the Azure CLI to create a pull request as opposed to using Hub.
 
@@ -126,7 +126,7 @@ This release pipeline is meant to be the second piece to the Image Tag Release. 
    - (*Azure DevOps only*) `ORG_NAME`: Set this to the organization URL in the format `https://dev.azure.com/org_name/`
    - (*Azure DevOps only*) `PROJECT_NAME`: Set this to the name of the project in your organization where the repository is hosted.
 
-    ![](./images/env_variables.png)
+    ![](./../images/env_variables.png)
 
 5. Run these steps from the very beginning, from the SRC to ACR pipeline, and shortly you should see a new release kick off for the newly built ACR image. Check the Cluster HLD Repo to see if there is a new pull request open.
 
@@ -134,7 +134,7 @@ Make sure that the SRC to ACR pipeline is triggered for all branches (not just m
 
 ### 3. Cluster HLD to Materialized Manifest
 
-The Cluster HLD to materialized manifest pipeline should resemble Bedrock's [Manifest Generation Pipeline](https://github.com/microsoft/bedrock/blob/rings/gitops/azure-devops/ManifestGeneration.md).
+The Cluster HLD to materialized manifest pipeline should resemble Bedrock's [Manifest Generation Pipeline](https://github.com/microsoft/bedrock/blob/master/gitops/azure-devops/ManifestGeneration.md).
 
 Add a new build pipeline for the Cluster HLD and place in the `azure-pipelines.yaml` the following code:
 
@@ -181,6 +181,6 @@ In addition to the environment variables defined in teh `azure-pipelines.yaml`, 
 - `ACCESS_TOKEN`: Set this to a personal access token that has write access to your repository
 - `REPO`: Set this to the **Materialized Manifest** repository (e.g https://github.com/bnookala/hello-rings-materialized)
 
-As described in the [Rings Model](./README.md) documentation, the idea of using a "Cluster HLD" is to have a repository that maintains the High Level Definition for **all** services and revisions that are intended to be run on the cluster.
+As described in the [Rings Model](https://github.com/microsoft/bedrock-rings/blob/master/README.md) documentation, the idea of using a "Cluster HLD" is to have a repository that maintains the High Level Definition for **all** services and revisions that are intended to be run on the cluster.
 
 The Cluster HLD will need to be modified by the user when a new service or a new ring (git branch) of a service is to be added. The new service/ring will be added as a subcomponent in the `component.yaml` file.

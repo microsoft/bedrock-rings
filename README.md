@@ -4,7 +4,7 @@ Ring deployment is a configuration on top of a service deployment that allows yo
 
 This README serves to explain a ring based deployment using [Fabrikate](https://github.com/microsoft/fabrikate) and Bedrock.
 
-**NOTE**: This pipeline is ideal for developers who want to practice Bedrock GitOps **without using a Service Mesh**. This approach will require that you have an application that replicates the behavior of a Service Mesh (e.g. [Ring Operator](https://github.com/microsoft/bedrock/tree/rings/gitops/rings#ring-operator)).
+**NOTE**: This pipeline is ideal for developers who want to practice Bedrock GitOps **without using a Service Mesh**. This approach will require that you have an application that replicates the behavior of a Service Mesh (e.g. [Ring Operator](https://github.com/microsoft/ring-operator)).
 
 The ring workflow is shown in the following diagram, where you see that it represents an extension to the [Bedrock CI/CD](https://github.com/microsoft/bedrock/tree/master/gitops).
 
@@ -97,9 +97,7 @@ A `ring` folder in the Source repo should be created to store the `common.yaml` 
  The `component.yaml` will source the Helm Chart Repo for the service, and the `common.yaml` will provide the values to the `ring.yaml`.
 
 ### Ring Operator
-The ring.yaml is consumed by a custom resource controller, which we call the Ring Controller. The Ring Controller sets up two resources on the cluster that map traffic to the proper service revision: a Traefik Ingress Route that maps path and headers to a Kubernetes service, and a Kubernetes service that maps to the microservice deployment.
-
-**DISCLAIMER:** Bedrock does *not* provide an open-sourced "Ring Operator", or any tool that can manage ingress routes to a specific service. We are in the process of developing and open-sourcing a "Ring Operator" soon.
+The ring.yaml is consumed by a custom resource controller, which we call the Ring Controller. The Ring Controller sets up two resources on the cluster that map traffic to the proper service revision: a Traefik Ingress Route that maps path and headers to a Kubernetes service, and a Kubernetes service that maps to the microservice deployment. Microsoft has an open-sourced Ring Operator that is compatible with the Bedrock Rings Model. For more information, please visit [here](https://github.com/microsoft/ring-operator).
 
 ## Adding a Service to the Ring Model
 
@@ -156,7 +154,7 @@ When adding a new service to the rings workflow, the developer will need to:
 
 ## Creating a New Ring for a Service
 
-This section will assist in understanding the order of operations of a ring model. However, if you want a step-by-step guide on implementing rings, please visit the [Rings Implementation Guide](./RingsImplementation.md)
+This section will assist in understanding the order of operations of a ring model. However, if you want a step-by-step guide on implementing rings, please visit the [Rings Implementation Guide](https://github.com/microsoft/bedrock-rings/blob/master/docs/RingsImplementation.md)
 
 ### 1. Create a New Branch
 
@@ -164,7 +162,7 @@ To create a revision of the microservice that can deploy alongside existing inst
 
 ### 2. Image Tag Release Pipeline
 
-The [Image Tag Release Pipeline](https://github.com/microsoft/bedrock/blob/rings/gitops/azure-devops/ImageTagRelease.md), which is a core component of the Bedrock CI/CD workflow,will acknowledge the creation of a new ring when a git branch is created. Like any other commit, it will trigger the build for the Image Tag Release process. Recall that this will execute a Build Pipeline to build and push a Docker image using the new image tag. Then, it will initiate the Release pipeline, where a Pull Request will be created to (1) have Fabrikate update the image tag (along with other metadata) in the **service Fabrikate definitions** (e.g. config/common.yaml), (2) add a new subcomponent (via `fab add` command) to the **service** `component.yaml` (shown below).
+The [Image Tag Release Pipeline](https://github.com/microsoft/bedrock/blob/master/gitops/azure-devops/ImageTagRelease.md), which is a core component of the Bedrock CI/CD workflow,will acknowledge the creation of a new ring when a git branch is created. Like any other commit, it will trigger the build for the Image Tag Release process. Recall that this will execute a Build Pipeline to build and push a Docker image using the new image tag. Then, it will initiate the Release pipeline, where a Pull Request will be created to (1) have Fabrikate update the image tag (along with other metadata) in the **service Fabrikate definitions** (e.g. config/common.yaml), (2) add a new subcomponent (via `fab add` command) to the **service** `component.yaml` (shown below).
 
 ### 3. Merge Pull Request against Service HLD Repo
 
