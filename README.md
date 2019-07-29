@@ -174,7 +174,8 @@ When the pull request is merged by a developer into the `master` branch of the C
 
 ## References
 
-- Service Source Repo: https://github.com/bnookala/hello-rings
-- Helm Chart Repo: https://github.com/bnookala/hello-rings-helm
-- Cluster HLD Repo: https://github.com/bnookala/hello-rings-cluster-v2
-- Materialized Manifest Repo: https://github.com/bnookala/hello-rings-cluster-materialized
+- [Service Source Repo](https://github.com/bnookala/hello-rings)
+- [Helm Chart Repo](https://github.com/bnookala/hello-rings-helm)
+- [Cluster HLD Repo](https://github.com/bnookala/hello-rings-cluster-v2)
+- [Materialized Manifest Repo](https://github.com/bnookala/hello-rings-cluster-materialized)
+- [Ring Operator](https://github.com/microsoft/ring-operator)
