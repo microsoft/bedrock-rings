@@ -88,5 +88,5 @@ hub pull-request -m "Updating service $branch"
 # You will need to specify variables $ORG_NAME and $PROJECT_NAME
 #export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
 #az devops configure --defaults organization=$ORG_NAME project=$PROJECT_NAME
-#echo "Making pull request from $pr_branch_name against master"
-#az repos pr create --org $ORG_NAME  -p $PROJECT_NAME -r $REPO -s "$pr_branch_name" -t "master" --title "Updating service $branch_name" -d "Automated pull request for branch $branch_name"
+#echo "Making pull request from $PR_BRANCH_NAME against master"
+#az repos pr create --org $ORG_NAME  -p $PROJECT_NAME -r $REPO -s "$PR_BRANCH_NAME" -t "master" --title "Updating service $branch" -d "Automated pull request for branch $branch"
